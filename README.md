@@ -1,7 +1,7 @@
 # spring-boot-react-app
 Test project for combining Spring Boot and React
 
-Backend: Spring Boot application, generated from https://start.spring.io/
-Frontend: React, generated from https://facebook.github.io/create-react-app/ 
+* Backend: Spring Boot application, generated from https://start.spring.io/
+* Frontend: React, generated from https://facebook.github.io/create-react-app/ 
 
-Frontend production build is packaged into a jar which is put into Spring Boot's classpath
+The main thing was to package the frontend production build output into a jar which is then put into Spring Boot's classpath so that the React frontend can be served from the Spring Boot jar.
