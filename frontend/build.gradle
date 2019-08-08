@@ -1,0 +1,45 @@
+plugins {
+    id "com.moowork.node" version "1.3.1"
+}
+apply plugin: 'base'
+
+version = '0.0.1-SNAPSHOT'
+
+node {
+    version = '10.15.3'
+    npmVersion = '6.4.1'
+    download = true
+}
+
+task npm_install(type: NpmTask) {
+    args = ['install', '--no-audit']
+}
+
+task forceClean(type: NpmTask) {
+    args = ['cache', 'clean', '--force']
+}
+
+task bundleFront(type: NpmTask) {
+    dependsOn assemble
+    dependsOn npm_install
+    args = ['run', 'build']
+}
+
+task startFront(type: NpmTask) {
+    dependsOn npm_install
+    args = ['start']
+}
+
+task frontendJar(type: Zip) {
+    dependsOn bundleFront
+
+    baseName 'frontend'
+    extension 'jar'
+
+    from ('build') {
+        exclude 'distributions/**'
+        into 'static'
+    }
+
+    includeEmptyDirs = false
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'spring-react4'
+
+include 'backend'
+include 'frontend'
