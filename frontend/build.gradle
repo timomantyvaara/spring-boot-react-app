@@ -1,3 +1,5 @@
+// https://github.com/srs/gradle-node-plugin
+// installs node, npm etc. and enables executing node scripts from gradle
 plugins {
     id "com.moowork.node" version "1.3.1"
 }
@@ -11,6 +13,7 @@ node {
     download = true
 }
 
+// override with npm install with no audit
 task npm_install(type: NpmTask) {
     args = ['install', '--no-audit']
 }
@@ -19,17 +22,18 @@ task forceClean(type: NpmTask) {
     args = ['cache', 'clean', '--force']
 }
 
-task bundleFront(type: NpmTask) {
-    dependsOn assemble
-    dependsOn npm_install
-    args = ['run', 'build']
-}
-
 task startFront(type: NpmTask) {
     dependsOn npm_install
     args = ['start']
 }
 
+// produces production ready build from react app
+task bundleFront(type: NpmTask) {
+    dependsOn npm_install
+    args = ['run', 'build']
+}
+
+// packages production ready files into a jar to be included in backend application package
 task frontendJar(type: Zip) {
     dependsOn bundleFront
 
